@@ -2,8 +2,14 @@ import streamlit as st
 import google.generativeai as genai
 import urllib.parse
 
-# --- CONEXÃO ---
-API_KEY = "AIzaSyCsWS9M4emFZlyz1bSwVpqDvQlxbwQ5D98"
+# --- CONEXÃO SEGURA ---
+# O Streamlit busca automaticamente a chave nos "Secrets"
+if "API_KEY" in st.secrets:
+    API_KEY = st.secrets["API_KEY"]
+else:
+    # Caso você ainda esteja rodando local sem o arquivo secrets.toml
+    API_KEY = "COLOQUE_SUA_CHAVE_AQUI_APENAS_PARA_TESTE_LOCAL"
+
 genai.configure(api_key=API_KEY)
 
 st.set_page_config(page_title="Orçador MR. EMPREITEIRA", layout="centered")
