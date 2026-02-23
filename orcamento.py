@@ -2,23 +2,13 @@ import streamlit as st
 import google.generativeai as genai
 import urllib.parse
 
-# --- CONEXÃO SEGURA ---
-# Tentamos pegar a chave do Streamlit Secrets. 
-# Se não existir (rodando local), ele tenta pegar de uma variável local.
+# --- CONFIGURAÇÃO DE SEGURANÇA (Secrets) ---
 if "API_KEY" in st.secrets:
     API_KEY = st.secrets["API_KEY"]
-else:
-    # Quando você rodar no seu PC, ele vai pedir a chave na barra lateral
-    st.sidebar.warning("API_KEY não encontrada nos Secrets.")
-    API_KEY = st.sidebar.text_input("Insira sua chave API para testar:", type="password")
-
-if API_KEY:
     genai.configure(api_key=API_KEY)
 else:
-    st.error("Por favor, configure a API_KEY para o orçador funcionar.")
+    st.error("Erro: A chave API não foi configurada nos Secrets do Streamlit.")
     st.stop()
-
-genai.configure(api_key=API_KEY)
 
 st.set_page_config(page_title="Orçador MR. EMPREITEIRA", layout="centered")
 
